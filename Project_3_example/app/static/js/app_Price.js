@@ -1,69 +1,77 @@
 function do_work() {
-  // extract user input
-  let country = d3.select("#country_filter").property("value");
+    console.log("inside function dowork()")
+    let aqi_data = "../AQI_clean.csv";
+  
 
-  // We need to make a request to the API
-  let url = `/api/v1.0/get_dashboard/${country}`;
-  d3.json(url).then(function (data) {
+    d3.csv(aqi_data).then(function (data) {
+        console.log("inside");
+        // extract user input
+        let country = d3.select("#country_filter").property("value");
+        
+        // Filter by user input
+        let filtered_data = data.filter(x => x.country === country);
 
-    // create the graphs
-    make_bar(data.bar_data);
+        // if (country !== "All"){
+        //     filtered_data = filtered_data.filter(x => x.country === country)
+        // }
+        // create the graphs
+        make_bar(filtered_data);
   });
 }
 
 function make_bar(filtered_data) {
-  // sort values
-  filtered_data.sort((a, b) => (b.launch_attempts - a.launch_attempts));
+    // Get data values for bar chart
+    let countryAvg = df2.aqi_value.mean();
+    let sortedAqiValues = df2.aqi_value.sort((a, b) => a - b);
+    let top5Values = sortedAqiValues.slice(0, 5);
+    let bottom5Values = sortedAqiValues.slice(-5);
 
-  // extract the x & y values for our bar chart
-  let bar_x = filtered_data.map(x => x.name);
-  let bar_text = filtered_data.map(x => x.full_name);
-  let bar_y1 = filtered_data.map(x => x.launch_attempts);
-  let bar_y2 = filtered_data.map(x => x.launch_successes);
+    // Create the data for the bar chart
+    let data = [
+        {
+            x: df2.city.slice(0, 5),
+            y: top5Values,
+            type: 'bar',
+            name: 'Top 5 Values'
+        },
+        {
+            x: df2.city.slice(-5),
+            y: bottom5Values,
+            type: 'bar',
+            name: 'Bottom 5 Values'
+        },
+        {
+            x: df2.city,
+            y: Array(df2.city.length).fill(countryAvg),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Average',
+            line: {
+                color: 'red',
+                width: 2,
+                dash: 'dash'
+            }
+        }
+    ];
 
-  // Trace1 for the Launch Attempts
-  let trace1 = {
-    x: bar_x,
-    y: bar_y1,
-    type: 'bar',
-    marker: {
-      color: "skyblue"
-    },
-    text: bar_text,
-    name: "Attempts"
-  };
-
-  // Trace 2 for the Launch Successes
-  let trace2 = {
-    x: bar_x,
-    y: bar_y2,
-    type: 'bar',
-    marker: {
-      color: "firebrick"
-    },
-    text: bar_text,
-    name: "Successes"
-  };
-
-  // Create data array
-  let data = [trace1, trace2];
-
-  // Apply a title to the layout
-  let layout = {
-    title: "SpaceX Launch Results",
-    barmode: "group",
+    // Set layout options
+    let layout = {
+        title: 'AQI Values Comparison',
+        xaxis: { title: 'City' },
+        yaxis: { title: 'AQI Value', range: [0, 500] }
+    };
+        
     // Include margins in the layout so the x-tick labels display correctly
-    margin: {
-      l: 50,
-      r: 50,
-      b: 200,
-      t: 50,
-      pad: 4
-    }
-  };
+    // margin: {
+    //     l: 50,
+    //     r: 50,
+    //     b: 200,
+    //     t: 50,
+    //     pad: 4
+    // };
 
-  // Render the plot to the div tag with id "plot"
-  Plotly.newPlot("bar_chart", data, layout);
+    // Render the plot to the div tag with id "plot"
+    Plotly.newPlot("bar_chart", data, layout);
 
 }
 

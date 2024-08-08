@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, render_template
-import pandas as pd
-import numpy as np
+from flask import Flask, jsonify, render_template # type: ignore
+import pandas as pd # type: ignore
+import numpy as np # type: ignore
 from sqlHelper import SQLHelper
 
 #################################################

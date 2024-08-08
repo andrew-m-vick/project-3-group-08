@@ -1,11 +1,11 @@
-import sqlalchemy
+import sqlalchemy # type: ignore
 # from sqlalchemy.ext.automap import automap_base
 # from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, text, func
+from sqlalchemy import create_engine, text, func # type: ignore
 import datetime
 
-import pandas as pd
-import numpy as np
+import pandas as pd # type: ignore
+import numpy as np # type: ignore
 
 # The Purpose of this Class is to separate out any Database logic
 class SQLHelper():
@@ -16,18 +16,10 @@ class SQLHelper():
     # define properties
     def __init__(self):
         self.engine = create_engine("sqlite:///aqi.sqlite")
-        # self.Base = None
+        self.Base = None
 
         # automap Base classes
-        # self.init_base()
-
-    # COMMENT BACK IN IF USING THE ORM
-
-    # def init_base(self):
-    #     # reflect an existing database into a new model
-    #     self.Base = automap_base()
-    #     # reflect the tables
-    #     self.Base.prepare(autoload_with=self.engine)
+        self.init_base()
 
     #################################################
     # Database Queries
@@ -48,117 +40,17 @@ class SQLHelper():
                 country,
                 city,
                 aqi_value,
-                api_category,
-                co_aqi_value,
-                co_aqi_category,
-                ozone_aqi_value,
-                ozone_aqi_category,
-                no2_aqi_value,
-                no2_aqi_categoty,
-                pm2_5_aqi_value,
-                pm2_5_aqi_category,
-                latitude,
-                longitude
-            FROM
+                aqi_category
+            FROM 
                 aqi
-            WHERE
-                country == {country}
-                {where_clause}
+            {where_clause}
             ORDER BY
-                country DESC;
+                aqi_value DESC
+            LIMIT
+                10; 
         """
 
         df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
         return(data)
 
-    # def get_pie(self, min_attempts, region):
-
-    #     # switch on user_region
-    #     if region == 'All':
-    #         where_clause = "and 1=1"
-    #     else:
-    #         where_clause = f"and region = '{region}'"
-
-    #     # build the query
-    #     query = f"""
-    #         SELECT
-    #             name,
-    #             region,
-    #             launch_attempts
-    #         FROM
-    #             launchpads
-    #         WHERE
-    #             launch_attempts >= {min_attempts}
-    #             {where_clause}
-    #         ORDER BY
-    #             launch_attempts DESC;
-    #     """
-
-    #     df = pd.read_sql(text(query), con = self.engine)
-    #     data = df.to_dict(orient="records")
-    #     return(data)
-
-    # def get_table(self, min_attempts, region):
-
-    #     # switch on user_region
-    #     if region == 'All':
-    #         where_clause = "and 1=1"
-    #     else:
-    #         where_clause = f"and region = '{region}'"
-
-    #     # build the query
-    #     query = f"""
-    #         SELECT
-    #             name,
-    #             full_name,
-    #             region,
-    #             latitude,
-    #             longitude,
-    #             launch_attempts,
-    #             launch_successes,
-    #             launch_attempts - launch_successes as launch_failures
-    #         FROM
-    #             launchpads
-    #         WHERE
-    #             launch_attempts >= {min_attempts}
-    #             {where_clause}
-    #         ORDER BY
-    #             launch_attempts DESC;
-    #     """
-
-    #     df = pd.read_sql(text(query), con = self.engine)
-    #     data = df.to_dict(orient="records")
-    #     return(data)
-
-    # def get_map(self, min_attempts, region):
-
-    #     # switch on user_region
-    #     if region == 'All':
-    #         where_clause = "and 1=1"
-    #     else:
-    #         where_clause = f"and region = '{region}'"
-
-    #     # build the query
-    #     query = f"""
-    #         SELECT
-    #             name,
-    #             full_name,
-    #             region,
-    #             latitude,
-    #             longitude,
-    #             launch_attempts,
-    #             launch_successes,
-    #             launch_attempts - launch_successes as launch_failures
-    #         FROM
-    #             launchpads
-    #         WHERE
-    #             launch_attempts >= {min_attempts}
-    #             {where_clause}
-    #         ORDER BY
-    #             launch_attempts DESC;
-    #     """
-
-    #     df = pd.read_sql(text(query), con = self.engine)
-    #     data = df.to_dict(orient="records")
-    #     return(data)
