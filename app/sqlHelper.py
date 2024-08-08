@@ -12,15 +12,6 @@ class SQLHelper:
         self.engine = create_engine("sqlite:///aqi.sqlite")  # Adjust the path if needed
 
     def get_table(self, country):
-        """
-        Retrieves the top 15 cities with the highest AQI values, optionally filtered by country.
-
-        Args:
-            country (str): The country to filter by, or 'All' to retrieve data for all countries.
-
-        Returns:
-            list: A list of dictionaries containing city, aqi_value, co_aqi_value, no2_aqi_value, latitude, and longitude.
-        """
 
         if country == 'All':
             where_clause = "1=1"
@@ -53,17 +44,6 @@ class SQLHelper:
         return data
 
     def get_map(self, country=None, city=None, aqi_category=None):
-        """
-        Retrieves data for generating a map, optionally filtered by country, city, and AQI category.
-
-        Args:
-            country (str, optional): The country to filter by. Defaults to None.
-            city (str, optional): The city to filter by. Defaults to None.
-            aqi_category (str, optional): The AQI category to filter by. Defaults to None.
-
-        Returns:
-            list: A list of dictionaries containing city, country, aqi_value, latitude, and longitude.
-        """
 
         query = """
             SELECT city, country, aqi_value, latitude, longitude
@@ -80,15 +60,6 @@ class SQLHelper:
         return data
 
     def get_bar(self, country):
-        """
-        Retrieves the count of cities in each AQI category, optionally filtered by country.
-
-        Args:
-            country (str): The country to filter by, or 'All' to retrieve data for all countries.
-
-        Returns:
-            list: A list of dictionaries containing aqi_category and count.
-        """
 
         if country == 'All':
             where_clause = ""
@@ -113,15 +84,6 @@ class SQLHelper:
         return data
 
     def get_bar2(self, country):
-        """
-        Retrieves the top 10 cities with the highest AQI values, optionally filtered by country.
-
-        Args:
-            country (str): The country to filter by, or 'All' to retrieve data for all countries
-
-        Returns
-            list: A list of dictionaries containing country, city, aqi_value, and aqi_category
-        """
 
         if country == 'All':
             where_clause = ""
