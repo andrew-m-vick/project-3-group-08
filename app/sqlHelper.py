@@ -46,26 +46,19 @@ class SQLHelper():
         data = df.to_dict(orient="records")
         return(data)
     
-    def get_map(self): #add
-        return()
-
-
-
-    def get_bar(self, country):
+    def get_map(self, country): #add
+        
         if country == 'All':
-            where_clause = ""
+            where_clause = "1=1"
         else:
-            where_clause = f"WHERE country = '{country}'"
+            where_clause = f" country = '{country}'"
+         
         query = f"""
-            SELECT
-                aqi_category,
-                COUNT(*) as count
-            FROM
-                aqi
-            {where_clause}
-            GROUP BY 
-                aqi_category;
+            SELECT latitude, longitude, aqi_value
+            FROM aqi
+            {where_clause};
         """
+        # execute query
         df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
         return(data)

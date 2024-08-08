@@ -39,8 +39,8 @@ def get_dashboard(country): #add
     }
     return(jsonify(data))
 
-@app.route("/api/v1.0/get_map/<min_attempts>/<region>") #change
-def get_map(min_attempts, region): #add/take away
+@app.route("/api/v1.0/get_map/<country>") #change
+def get_map(country): #add/take away
     #min_attempts = int(min_attempts) # cast to int
     map_data = sql.get_map() #double check
 
