@@ -22,7 +22,6 @@ def dashboard():
 
 # SQL Queries
 @app.route("/api/v1.0/get_dashboard/<country>")
-
 def get_dashboard(country):
 
     bar_data = sql.get_bar(country)
