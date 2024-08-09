@@ -3,8 +3,10 @@ function do_work() {
     
     // extract user input
     let country = d3.select("#country_filter").property("value");
-    
+    console.log(country);
+
     let url = `/api/v1.0/get_dashboard/${country}`;
+    console.log(url);
     d3.json(url).then(function (data) {
         console.log("inside");
 
@@ -16,7 +18,7 @@ function do_work() {
         //     filtered_data = filtered_data.filter(x => x.country === country)
         // }
         // create the graphs
-        make_bar(filtered_data);
+        make_bar(data.bar_data);
   });
 }
 

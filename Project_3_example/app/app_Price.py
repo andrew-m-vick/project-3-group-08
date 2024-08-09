@@ -15,19 +15,20 @@ sql = SQLHelper()
 
 # HTML ROUTES
 
-@app.route("/api/v1.0/dashboard")
+@app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("dashboard_Price.html")
 
 
 # SQL Queries
 @app.route("/api/v1.0/get_dashboard/<country>")
+
 def get_dashboard(country):
 
     bar_data = sql.get_bar(country)
 
     data = {
-        "bar_data": bar_data,
+        "bar_data": bar_data
     }
     return(jsonify(data))
 

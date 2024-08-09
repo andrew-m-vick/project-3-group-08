@@ -16,10 +16,10 @@ class SQLHelper():
     # define properties
     def __init__(self):
         self.engine = create_engine("sqlite:///aqi.sqlite")
-        self.Base = None
+        # self.Base = None
 
-        # automap Base classes
-        self.init_base()
+        # # automap Base classes
+        # self.init_base()
 
     #################################################
     # Database Queries
@@ -27,8 +27,7 @@ class SQLHelper():
 
     # USING RAW SQL
     def get_bar(self, country):
-
-        # switch on user_country
+            # switch on user_country
         if country == 'All':
             where_clause = "and 1=1"
         else:
