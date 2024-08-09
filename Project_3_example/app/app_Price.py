@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, render_template # type: ignore
-import pandas as pd # type: ignore
-import numpy as np # type: ignore
+from flask import Flask, jsonify, render_template 
+import pandas as pd 
+import numpy as np 
 from sqlHelper import SQLHelper
 
 #################################################
@@ -15,7 +15,7 @@ sql = SQLHelper()
 
 # HTML ROUTES
 
-@app.route("/dashboard")
+@app.route("/api/v1.0/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
@@ -30,6 +30,8 @@ def get_dashboard(country):
         "bar_data": bar_data,
     }
     return(jsonify(data))
+
+
 
 
 # Run the App

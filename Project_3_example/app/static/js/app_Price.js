@@ -1,12 +1,13 @@
 function do_work() {
     console.log("inside function dowork()")
-    let aqi_data = "../AQI_clean.csv";
-  
-
-    d3.csv(aqi_data).then(function (data) {
+    
+    // extract user input
+    let country = d3.select("#country_filter").property("value");
+    
+    let url = `/api/v1.0/get_dashboard/${country}`;
+    d3.json(url).then(function (data) {
         console.log("inside");
-        // extract user input
-        let country = d3.select("#country_filter").property("value");
+
         
         // Filter by user input
         let filtered_data = data.filter(x => x.country === country);
@@ -18,6 +19,7 @@ function do_work() {
         make_bar(filtered_data);
   });
 }
+
 
 function make_bar(filtered_data) {
     // Get data values for bar chart
