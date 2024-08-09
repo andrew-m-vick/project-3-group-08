@@ -75,11 +75,13 @@ function createMap(data) {
 
 // Fetch data from the Flask API and create the map
 function do_work() {
-  fetch('/api/v1.0/get_map/10/USA')
-      .then(response => response.json())
-      .then(data => {
-          createMap(data);
-      });
+  // We need to make a request to the API
+  let url = `/api/v1.0/get_map/`;
+
+  // make TWO requests
+  d3.json(url).then(function (data) {
+    createMap(data);
+  });
 }
 
 // Call do_work to initialize the map when the page loads

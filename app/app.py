@@ -26,7 +26,6 @@ def about_us():
 # SQL Querris
 @app.route("/api/v1.0/get_dashboard/<country>") #change
 def get_dashboard(country): #add
-    # min_attempts = int(min_attempts) # cast to int
 
     bar_data = sql.get_bar(country) #add
     bar2_data = sql.get_bar2(country) #add
@@ -39,8 +38,8 @@ def get_dashboard(country): #add
     }
     return(jsonify(data))
 
-@app.route("/api/v1.0/get_map/<country>") #change
-def get_map(country): #add/take away
+@app.route("/api/v1.0/get_map") #change
+def get_map(): #add/take away
     #min_attempts = int(min_attempts) # cast to int
     map_data = sql.get_map() #double check
 

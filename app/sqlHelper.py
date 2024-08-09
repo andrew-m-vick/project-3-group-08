@@ -10,7 +10,7 @@ class SQLHelper():
 
 
     def __init__(self):
-        self.engine = create_engine("sqlite:///../Resources/aqi.sqlite") # might need to change
+        self.engine = create_engine("sqlite:///aqi.sqlite") # might need to change
 
     
     def get_table(self, country):
@@ -45,18 +45,13 @@ class SQLHelper():
         df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
         return(data)
-    
-    def get_map(self, country): #add
         
-        if country == 'All':
-            where_clause = "1=1"
-        else:
-            where_clause = f" country = '{country}'"
+    
+    def get_map(self): #add
          
         query = f"""
-            SELECT latitude, longitude, aqi_value
-            FROM aqi
-            {where_clause};
+            SELECT latitude, longitude, aqi_value, city, country, aqi_category
+            FROM aqi;
         """
         # execute query
         df = pd.read_sql(text(query), con = self.engine)
