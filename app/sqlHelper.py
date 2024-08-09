@@ -46,8 +46,14 @@ class SQLHelper:
     def get_map(self, country=None, city=None, aqi_category=None):
 
         query = """
-            SELECT city, country, aqi_value, latitude, longitude
-            FROM aqi 
+            SELECT
+                city,
+                country,
+                aqi_value,
+                latitude,
+                longitude
+            FROM
+                aqi 
             WHERE (:country IS NULL OR country = :country) 
                 AND (:city IS NULL OR city = :city) 
                 AND (:aqi_category IS NULL OR aqi_category = :aqi_category)
