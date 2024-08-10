@@ -36,43 +36,59 @@ function make_table(filtered_data) {
 }
 
 function make_bar(filtered_data) {
-    // sort values
-    filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
-  
-    // extract data for pie chart
-    let bar_x = filtered_data.map(x => x.aqi_category);
-    let bar_text = filtered_data.map(x => x.city);
-    let bar_y = filtered_data.map(x => x.counts);
-  
-    let trace1 = {
-      x: bar_x,
-      y: bar_y,
-      type: 'bar',
-      marker: {
-        color: "skyblue"
+  // Get data values for bar chart
+  let sortedAqiValues = filtered_data.aqi_value.sort((a, b) => a - b);
+  let top5Values = sortedAqiValues.slice(0, 5);
+  let bottom5Values = sortedAqiValues.slice(-5);
+
+  // Create the data for the bar chart
+  let data = [
+      {
+          x: filtered_data.city.slice(0, 5),
+          y: top5Values,
+          type: 'bar',
+          name: 'Top 5 Values'
       },
-      text: bar_text,
-      name: "Attempts"
-    };
-  
-    // Create data array
-    let data = [trace1];
-  
-    // Apply a title to the layout
-    let layout = {
-      title: "SpaceX Launch Results",
-      // Include margins in the layout so the x-tick labels display correctly
-      margin: {
-        l: 50,
-        r: 50,
-        b: 200,
-        t: 50,
-        pad: 4
+      {
+          x: filtered_data.city.slice(-5),
+          y: bottom5Values,
+          type: 'bar',
+          name: 'Bottom 5 Values'
+      },
+      {
+          x: filtered_data.city,
+          y: Array(filtered_data.city.length).fill(countryAvg),
+          type: 'scatter',
+          mode: 'lines',
+          name: 'Average',
+          line: {
+              color: 'red',
+              width: 2,
+              dash: 'dash'
+          }
       }
-    };
-  
-    Plotly.newPlot("bar_chart", data, layout);
-  }
+  ];
+
+  // Set layout options
+  let layout = {
+      title: 'AQI Values Comparison',
+      xaxis: { title: 'City' },
+      yaxis: { title: 'AQI Value', range: [0, 500] }
+  };
+      
+  // Include margins in the layout so the x-tick labels display correctly
+  // margin: {
+  //     l: 50,
+  //     r: 50,
+  //     b: 200,
+  //     t: 50,
+  //     pad: 4
+  // };
+
+  // Render the plot to the div tag with id "plot"
+  Plotly.newPlot("bar_chart", data, layout);
+
+}
   
   function make_bar2(filtered_data) {
     // sort values

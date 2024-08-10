@@ -60,24 +60,38 @@ class SQLHelper():
 
 
 
-    def get_bar(self, country):# add
-        if country == 'All':
-            where_clause = ""
-        else:
-            where_clause = f"WHERE country = '{country}'"
+    def get_bar(self, country):
 
+        # switch on user_country
+        if country == 'All':
+            where_clause = "1=1"
+        else:
+            where_clause = f"country = '{country}'"
+
+        # build the query
         query = f"""
             SELECT
+                country,
+                city,
+                aqi_value,
                 aqi_category,
-                COUNT(*) as count
+                co_aqi_value,
+                co_aqi_category,
+                ozone_aqi_value,
+                ozone_aqi_category,
+                no2_aqi_value,
+                no2_aqi_category,
+                latitude,
+                longitude,
+                AVG(aqi_value) AS countryAvg
             FROM
                 aqi
-            {where_clause}
-            GROUP BY
-                aqi_category;
+            WHERE
+                {where_clause}
+            ORDER BY
+                country DESC;
         """
 
-        # execute query
         df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
         return(data)

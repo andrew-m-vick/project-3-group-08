@@ -76,7 +76,7 @@ function createMap(data) {
 // Fetch data from the Flask API and create the map
 function do_work() {
   // We need to make a request to the API
-  let url = `/api/v1.0/get_map/`;
+  let url = `/api/v1.0/get_map`;
 
   // make TWO requests
   d3.json(url).then(function (data) {
