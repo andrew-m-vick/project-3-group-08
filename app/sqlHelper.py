@@ -68,8 +68,10 @@ class SQLHelper():
     def get_bar(self, country):# add
         if country == 'All':
             where_clause = ""
+            params = {}
         else:
             where_clause = f"WHERE country = '{country}'"
+            params = {"country": country}
 
         query = f"""
             SELECT
