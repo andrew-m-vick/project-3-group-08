@@ -6,20 +6,22 @@ import datetime
 import pandas as pd
 import numpy as np
 
-class SQLHelper:
-    
-    def __init__(self):
-        self.engine = create_engine("sqlite:///aqi.sqlite")  # Adjust the path if needed
+class SQLHelper():
 
+
+    def __init__(self):
+        self.engine = create_engine("sqlite:///../Resources/aqi.sqlite") # might need to change
+
+    
     def get_table(self, country):
 
         if country == 'All':
             where_clause = "1=1"
-            params = {}
         else:
-            where_clause = "country = :country"
-            params = {'country': country}
+            where_clause = f" country = '{country}'"
 
+
+        # build the query
         query = f"""
             SELECT
                 city,
@@ -39,34 +41,35 @@ class SQLHelper:
             LIMIT 15;
         """
 
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
-
-    def get_map(self, country=None, city=None, aqi_category=None):
-
-        query = """
-            SELECT city, country, aqi_value, latitude, longitude
-            FROM aqi 
-            WHERE (:country IS NULL OR country = :country) 
-                AND (:city IS NULL OR city = :city) 
-                AND (:aqi_category IS NULL OR aqi_category = :aqi_category)
+        return(data)
+    
+    def get_map(self, country): #add
+        
+        if country == 'All':
+            where_clause = "1=1"
+        else:
+            where_clause = f" country = '{country}'"
+         
+        query = f"""
+            SELECT latitude, longitude, aqi_value
+            FROM aqi
+            {where_clause};
         """
-
-        params = {'country': country, 'city': city, 'aqi_category': aqi_category}
-
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
+        return(data)
 
-    def get_bar(self, country):
 
+
+    def get_bar(self, country):# add
         if country == 'All':
             where_clause = ""
-            params = {}
         else:
-            where_clause = "WHERE country = :country"
-            params = {'country': country}
+            where_clause = f"WHERE country = '{country}'"
 
         query = f"""
             SELECT
@@ -79,19 +82,17 @@ class SQLHelper:
                 aqi_category;
         """
 
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
+        return(data)
 
-    def get_bar2(self, country):
-
+    
+    def get_bar2(self, country): #add
         if country == 'All':
             where_clause = ""
-            params = {}
         else:
-            where_clause = "WHERE country = :country"
-            params = {'country': country}
-
+            where_clause = f"WHERE country = '{country}'"
         query = f"""
             SELECT
                 country,
@@ -106,7 +107,6 @@ class SQLHelper:
             LIMIT
                 10;
         """
-
-        df = pd.read_sql(text(query), con=self.engine, params=params)
-        data = df.to_dict(orient="records")
-        return data
+        df2 = pd.read_sql(text(query), con = self.engine)
+        data = df2.to_dict(orient="records")
+        return(data) 
