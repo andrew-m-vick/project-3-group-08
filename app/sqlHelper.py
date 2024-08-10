@@ -74,10 +74,13 @@ class SQLHelper():
                 country,
                 city,
                 aqi_value,
+                aqi_category,
                 co_aqi_value,
+                co_aqi_category,
                 ozone_aqi_value,
+                ozone_aqi_category,
                 no2_aqi_value,
-                AVG(aqi_value) AS countryAvg
+                no2_aqi_value
             FROM
                 aqi
             WHERE
