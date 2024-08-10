@@ -97,7 +97,7 @@ function make_bar(filtered_data) {
     // extract the x & y values for our bar chart
     let bar_x = filtered_data.map(x => x.city);
     let bar_text = filtered_data.map(x => x.city);
-    let bar_y = filtered_data.map(x => x.aqi_value);
+    let bar_y = filtered_data.map(x => x.count);
   
     // Trace1 for the Launch Attempts
     let trace1 = {
