@@ -23,7 +23,7 @@ def map():
 def about_us():
     return render_template("about_us.html")
 
-# SQL Queries
+# SQL Querris
 @app.route("/api/v1.0/get_dashboard/<country>") #change
 def get_dashboard(country): #add
 
@@ -38,12 +38,12 @@ def get_dashboard(country): #add
     }
     return(jsonify(data))
 
-@app.route("/api/v1.0/get_map/<country>") #change
-def get_map(country): #add/take away
-    # cast to int
-    data = sql.get_map() #double check
+@app.route("/api/v1.0/get_map") #change
+def get_map(): #add/take away
+    #min_attempts = int(min_attempts) # cast to int
+    map_data = sql.get_map() #double check
 
-    return(jsonify(data))
+    return(jsonify(map_data))
 
 
 

@@ -6,20 +6,22 @@ import datetime
 import pandas as pd
 import numpy as np
 
-class SQLHelper:
-    
-    def __init__(self):
-        self.engine = create_engine("sqlite:///aqi.sqlite")  # Adjust the path if needed
+class SQLHelper():
 
+
+    def __init__(self):
+        self.engine = create_engine("sqlite:///aqi.sqlite") # might need to change
+
+    
     def get_table(self, country):
 
         if country == 'All':
             where_clause = "1=1"
-            params = {}
         else:
-            where_clause = "country = :country"
-            params = {'country': country}
+            where_clause = f" country = '{country}'"
 
+
+        # build the query
         query = f"""
             SELECT
                 city,
@@ -39,44 +41,66 @@ class SQLHelper:
             LIMIT 15;
         """
 
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
-
-    def get_map(self, country=None, city=None, aqi_category=None):
-
-        query = """
-            SELECT
-                city,
-                country,
-                aqi_value,
-                latitude,
-                longitude
-            FROM
-                aqi 
-            WHERE (:country IS NULL OR country = :country) 
-                AND (:city IS NULL OR city = :city) 
-                AND (:aqi_category IS NULL OR aqi_category = :aqi_category)
+        return(data)
+        
+    
+    def get_map(self): #add
+         
+        query = f"""
+            SELECT latitude, longitude, aqi_value, city, country, aqi_category
+            FROM aqi;
         """
-
-        params = {'country': country, 'city': city, 'aqi_category': aqi_category}
-
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
+        return(data)
+
+
 
     def get_bar(self, country):
 
+        # switch on user_country
+        if country == 'All':
+            where_clause = "1=1"
+        else:
+            where_clause = f"country = '{country}'"
+
+        # build the query
+        query = f"""
+            SELECT
+                country,
+                city,
+                aqi_value,
+                co_aqi_value,
+                ozone_aqi_value,
+                no2_aqi_value,
+                AVG(aqi_value) AS countryAvg
+            FROM
+                aqi
+            WHERE
+                {where_clause}
+            ORDER BY
+                country DESC;
+        """
+
+        df = pd.read_sql(text(query), con = self.engine)
+        data = df.to_dict(orient="records")
+        return(data)
+
+    
+    def get_bar2(self, country):# add
         if country == 'All':
             where_clause = ""
-            params = {}
         else:
-            where_clause = "WHERE country = :country"
-            params = {'country': country}
+            where_clause = f"WHERE country = '{country}'"
 
         query = f"""
             SELECT
                 aqi_category,
+                city,
                 COUNT(*) as count
             FROM
                 aqi
@@ -85,34 +109,7 @@ class SQLHelper:
                 aqi_category;
         """
 
-        df = pd.read_sql(text(query), con=self.engine, params=params)
+        # execute query
+        df = pd.read_sql(text(query), con = self.engine)
         data = df.to_dict(orient="records")
-        return data
-
-    def get_bar2(self, country):
-
-        if country == 'All':
-            where_clause = ""
-            params = {}
-        else:
-            where_clause = "WHERE country = :country"
-            params = {'country': country}
-
-        query = f"""
-            SELECT
-                country,
-                city,
-                aqi_value,
-                aqi_category
-            FROM
-                aqi
-            {where_clause}
-            ORDER BY
-                aqi_value DESC
-            LIMIT
-                10;
-        """
-
-        df = pd.read_sql(text(query), con=self.engine, params=params)
-        data = df.to_dict(orient="records")
-        return data
+        return(data)
