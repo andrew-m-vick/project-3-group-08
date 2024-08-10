@@ -65,7 +65,7 @@ function make_bar(filtered_data) {
   function getColorByCategory(aqi_category) {
     switch (aqi_category) {
         case "Hazardous":
-            return "0466C80";
+            return "#0466C80";
         case "Very Unhealthy":
             return "#0353A451";
         case "Unhealthy":
@@ -94,6 +94,7 @@ function make_bar(filtered_data) {
               width: 1},
           },
           type: 'bar',
+          hoverinfo: "none",
           orientation: "h",
           text: topChartText,
           textposition: "auto",
@@ -111,6 +112,7 @@ function make_bar(filtered_data) {
           },
           type: 'bar',
           orientation: "h",
+          hoverinfo: "none",
           text: bottomChartText,
           textposition: "auto",
           name: 'Top 5 Best Cities'
@@ -118,52 +120,49 @@ function make_bar(filtered_data) {
   ];
   // Set layout options
   let layout = {
-      showlegend: false,
-      hoverlabel: {
-      },
-      title: {
-        text:'Air Quality Index: Top 5 Best and Worst Cities',
-        font: {
-          family: "Arial, sans-serif",
-          size: 24,
-          Color: "black"
-        },
-      },
-      xaxis: {
-        title: {
-            text: "Air Quality Index (AQI) Value",
-            //standoff: 10,
-            x: 110,
-            y: 1000,
-            //xanchor: ‘center’,
-            //yanchor: ‘bottom’,
-            font: {
-                family: 'Arial, sans-serif',
-                size: 18,
-                color: 'black'
-            }
-        }
-    },
-    yaxis: {
-      title: {
-          text: 'City',
-          standoff: 20,
-          x: 0,
-          y: 0,
-          xanchor: 'left',
-          yanchor: 'middle',
-          font: {
-              family: 'Arial, sans-serif',
-              size: 18,
-              color: 'black'
-          },
-          range: [0, ylimit]
+    showlegend: false,
+    title: {
+      text: 'Air Quality Index: Top 5 Best and Worst Cities',
+      font: {
+        family: "Arial, sans-serif",
+        size: 24,
+        color: "black"
       }
     },
+    // From xpert
+    annotations: [
+      {
+        x: 0.15,
+        y: -0.2,
+        xref: 'paper',
+        yref: 'paper',
+        text: 'Air Quality Index (AQI) Value',
+        showarrow: false,
+        font: {
+          family: 'Arial, sans-serif',
+          size: 18,
+          color: 'black'
+        }
+      },
+      {
+        x: -0.35,
+        y: 0.5,
+        xref: 'paper',
+        yref: 'paper',
+        text: 'City',
+        showarrow: false,
+        font: {
+          family: 'Arial, sans-serif',
+          size: 18,
+          color: 'black'
+        },
+        textangle: -90
+      }
+    ],
     // Include margins in the layout so the x-tick labels display correctly
     margin: {
-      l: 220,
-      r: 100,
+      l: 200,
+      r: 60,
       b: 90,
       t: 90,
       pad: 5
