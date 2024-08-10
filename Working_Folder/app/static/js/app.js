@@ -78,7 +78,7 @@ function make_bar(filtered_data) {
     // Get data values for bar chart
     //let countryAvg = (filtered_data.aqi_value.sum() / filtered_data.aqi_value.length);
 
-    // Filter out duplicate 
+    
     let sortedAqiValues = filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
 
     let top5Values = sortedAqiValues.slice(0, 5);
