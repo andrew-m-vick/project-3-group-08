@@ -77,10 +77,20 @@ function make_bar(filtered_data) {
 
     // Get data values for bar chart
     //let countryAvg = (filtered_data.aqi_value.sum() / filtered_data.aqi_value.length);
+
+    // Filter out duplicate 
     let sortedAqiValues = filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
 
     let top5Values = sortedAqiValues.slice(0, 5);
     let bottom5Values = sortedAqiValues.slice(-5);
+    console.log(top5Values);
+
+    // Get ylimit to dynamically set ylimit
+    let highestAqi = sortedAqiValues[0];
+    console.log(highestAqi);
+    let ylimAqi = highestAqi.aqi_value;
+    console.log(ylimAqi);
+    let ylimit = ylimAqi + 50;
 
     // Extract city names for top and bottom 5 values
     let topCities = top5Values.map(item => item.city + ", " + item.country);
@@ -92,7 +102,7 @@ function make_bar(filtered_data) {
 
     // Set each bar color according to AQI category
     // Loop through topAqiValues and bottomAqiValues, set the color based on category, save data to new array.
-    
+
 
 
     // Create the data for the bar chart
@@ -100,12 +110,24 @@ function make_bar(filtered_data) {
         {
             x: topCities,
             y: topAqiValues,
+            marker:{
+              color: "blue",
+              line: {
+                color: "black",
+                width: 1},
+            },
             type: 'bar',
             name: 'Top 5 Worst Cities'
         },
         {
             x: bottomCities,
             y: bottomAqiValues,
+            marker:{
+              color: "green",
+              line: {
+                color: "black",
+                width: 1},
+            },
             type: 'bar',
             name: 'Top 5 Best Cities'
         },
@@ -127,7 +149,7 @@ function make_bar(filtered_data) {
     let layout = {
         title: 'AQI Values Comparison',
         xaxis: { title: 'City' },
-        yaxis: { title: '\n AQI Value \n', range: [0, 500] },
+        yaxis: { title: '\n AQI Value \n', range: [0, ylimit] },
         images: [
           {
             "source": "/aqi_category_background.png",
