@@ -36,28 +36,43 @@ function make_table(filtered_data) {
 }
 
 function make_bar(filtered_data) {
-  // Get data values for bar chart
-  let sortedAqiValues = filtered_data.sort((a, b) => a - b);
-  let top5Values = filtered_data.slice(0, 5);
-  let bottom5Values = filtered_data.slice(-5);
+  // Calculate the mean AQI value
+  let totalAqiValue = filtered_data.reduce((sum, item) => sum + item.aqi_value, 0);
+  let countryAvg = totalAqiValue / filtered_data.length;
 
-  // Create the data for the bar chart
+  // Sort the data based on AQI values
+  let sortedData = [...filtered_data].sort((a, b) => a.aqi_value - b.aqi_value);
+
+  // Get the first 5 (lowest) and last 5 (highest) AQI values
+  let bottom5Values = sortedData.slice(0, 5);
+  let top5Values = sortedData.slice(-5);
+
+  // Prepare data for the bar chart
+  let bottom5Cities = bottom5Values.map(item => item.city);
+  let bottom5AqiValues = bottom5Values.map(item => item.aqi_value);
+
+  let top5Cities = top5Values.map(item => item.city);
+  let top5AqiValues = top5Values.map(item => item.aqi_value);
+
+  // Create the data for Plotly
   let data = [
       {
-          x: filtered_data.city.slice(0, 5),
-          y: top5Values,
+          x: bottom5Cities,
+          y: bottom5AqiValues,
           type: 'bar',
-          name: 'Top 5 Values'
+          name: 'Bottom 5 Values',
+          marker: { color: 'orange' }
       },
       {
-          x: filtered_data.city.slice(-5),
-          y: bottom5Values,
+          x: top5Cities,
+          y: top5AqiValues,
           type: 'bar',
-          name: 'Bottom 5 Values'
+          name: 'Top 5 Values',
+          marker: { color: 'blue' }
       },
       {
-          x: filtered_data.city,
-          y: Array(filtered_data.city.length).fill(countryAvg),
+          x: bottom5Cities.concat(top5Cities),
+          y: Array(bottom5Cities.length + top5Cities.length).fill(countryAvg),
           type: 'scatter',
           mode: 'lines',
           name: 'Average',
@@ -71,23 +86,21 @@ function make_bar(filtered_data) {
 
   // Set layout options
   let layout = {
-      title: 'AQI Values Comparison',
+      title: 'Top 5 and Bottom 5 AQI Values',
       xaxis: { title: 'City' },
-      yaxis: { title: 'AQI Value', range: [0, 500] }
+      yaxis: { title: 'AQI Value', range: [0, 500] },
+      barmode: 'group',  // Group the bars to show them separately
+      margin: {
+          l: 50,
+          r: 50,
+          b: 100,
+          t: 50,
+          pad: 4
+      }
   };
-      
-  // Include margins in the layout so the x-tick labels display correctly
-  // margin: {
-  //     l: 50,
-  //     r: 50,
-  //     b: 200,
-  //     t: 50,
-  //     pad: 4
-  // };
 
-  // Render the plot to the div tag with id "plot"
+  // Render the plot to the div tag with id "bar_chart"
   Plotly.newPlot("bar_chart", data, layout);
-
 }
   
   function make_bar2(filtered_data) {
@@ -95,8 +108,8 @@ function make_bar(filtered_data) {
     filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
   
     // extract the x & y values for our bar chart
-    let bar_x = filtered_data.map(x => x.city);
-    let bar_text = filtered_data.map(x => x.city);
+    let bar_x = filtered_data.map(x => x.aqi_category);
+    let bar_text = filtered_data.map(x => x.aqi_category);
     let bar_y = filtered_data.map(x => x.count);
   
     // Trace1 for the Launch Attempts
@@ -116,7 +129,7 @@ function make_bar(filtered_data) {
   
     // Apply a title to the layout
     let layout = {
-      title: "SpaceX Launch Results",
+      title: "AQI by category",
       // Include margins in the layout so the x-tick labels display correctly
       margin: {
         l: 50,
