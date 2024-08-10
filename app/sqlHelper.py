@@ -38,7 +38,7 @@ class SQLHelper():
                 aqi_value DESC,
                 co_aqi_value DESC,
                 no2_aqi_value
-            LIMIT 15;
+            LIMIT 10;
         """
 
         # execute query
