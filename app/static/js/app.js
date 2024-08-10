@@ -37,9 +37,9 @@ function make_table(filtered_data) {
 
 function make_bar(filtered_data) {
   // Get data values for bar chart
-  let sortedAqiValues = filtered_data.aqi_value.sort((a, b) => a - b);
-  let top5Values = sortedAqiValues.slice(0, 5);
-  let bottom5Values = sortedAqiValues.slice(-5);
+  let sortedAqiValues = filtered_data.sort((a, b) => a - b);
+  let top5Values = filtered_data.slice(0, 5);
+  let bottom5Values = filtered_data.slice(-5);
 
   // Create the data for the bar chart
   let data = [
