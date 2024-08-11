@@ -46,7 +46,6 @@ def get_map(): #add/take away
     return(jsonify(map_data))
 
 
-
 # Run the App
 if __name__ == '__main__':
     app.run(debug=True)

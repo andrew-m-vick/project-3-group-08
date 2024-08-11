@@ -58,8 +58,6 @@ class SQLHelper():
         data = df.to_dict(orient="records")
         return(data)
 
-
-
     def get_bar(self, country):
 
         # switch on user_country
