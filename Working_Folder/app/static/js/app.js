@@ -76,107 +76,153 @@ function make_bar(filtered_data) {
   function make_bar2(filtered_data) {
 
     // Get data values for bar chart
-    //let countryAvg = (filtered_data.aqi_value.sum() / filtered_data.aqi_value.length);
 
-    
-    let sortedAqiValues = filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
+    // Filter out duplicate results from array of objects
+    let uniqueValues = {};
+    let result = filtered_data.filter(obj => {
+      return uniqueValues.hasOwnProperty(obj.city) ? false : (uniqueValues[obj.city] = true);
+    });
 
+    // Sort filtered results
+    let sortedAqiValues = result.sort((a, b) => (b.aqi_value - a.aqi_value));
+
+    // Get top and bottom 5 results from sorted filtered data
     let top5Values = sortedAqiValues.slice(0, 5);
     let bottom5Values = sortedAqiValues.slice(-5);
-    console.log(top5Values);
 
-    // Get ylimit to dynamically set ylimit
+    // Get ylimit to dynamically set ylimit based on aqi_value
     let highestAqi = sortedAqiValues[0];
-    console.log(highestAqi);
     let ylimAqi = highestAqi.aqi_value;
-    console.log(ylimAqi);
     let ylimit = ylimAqi + 50;
 
-    // Extract city names for top and bottom 5 values
+    // Extract city, country and aqi_category for top and bottom 5 values
     let topCities = top5Values.map(item => item.city + ", " + item.country);
     let bottomCities = bottom5Values.map(item => item.city + ", " + item.country);
+    let topChartText = top5Values.map(item => "AQI " + item.aqi_value + ": " + item.aqi_category);
+    let bottomChartText = bottom5Values.map(item => "AQI " + item.aqi_value + ": " + item.aqi_category);
 
-    // Extract AQI values for top and bottom 5 values
+    // Extract AQI values and categories for top and bottom 5 values
     let topAqiValues = top5Values.map(item => item.aqi_value);
+    let topAqiCategories = top5Values.map(item => item.aqi_category);
     let bottomAqiValues = bottom5Values.map(item => item.aqi_value);
+    let bottomAqiCategories = bottom5Values.map(item => item.aqi_category);
 
     // Set each bar color according to AQI category
-    // Loop through topAqiValues and bottomAqiValues, set the color based on category, save data to new array.
-
-
+    function getColorByCategory(aqi_category) {
+      switch (aqi_category) {
+          case "Hazardous":
+              return "#0466C80";
+          case "Very Unhealthy":
+              return "#0353A451";
+          case "Unhealthy":
+              return "#023E7D";
+          case "Unhealthy for Sensitive Groups":
+              return "#5C677D";
+          case "Moderate":
+              return "#7D8597";
+          case "Good":
+              return "#979DAC";
+          default:
+              return 'orange'; // Default color catchall 
+      }
+  }
 
     // Create the data for the bar chart
     let data = [
         {
-            x: topCities,
-            y: topAqiValues,
+            y: topCities,
+            x: topAqiValues,
             marker:{
-              color: "blue",
+              // Set bar color based on aqi_category
+              color: topAqiCategories.map(category => getColorByCategory(category)),
+              opacity: 0.75,
               line: {
                 color: "black",
                 width: 1},
             },
             type: 'bar',
-            name: 'Top 5 Worst Cities'
+            hoverinfo: "none",
+            orientation: "h",
+            text: topChartText,
+            textposition: "auto",
+            name: 'Top 5 Worst Cities',
         },
         {
-            x: bottomCities,
-            y: bottomAqiValues,
+            y: bottomCities,
+            x: bottomAqiValues,
             marker:{
-              color: "green",
+              color: bottomAqiCategories.map(category => getColorByCategory(category)),
+              opacity: 0.75,
               line: {
                 color: "black",
                 width: 1},
             },
             type: 'bar',
+            orientation: "h",
+            hoverinfo: "none",
+            text: bottomChartText,
+            textposition: "auto",
             name: 'Top 5 Best Cities'
         },
-        // {
-        //     x: filtered_data.city,
-        //     y: Array(filtered_data.city.length).fill(countryAvg),
-        //     type: 'scatter',
-        //     mode: 'lines',
-        //     name: 'Average',
-        //     line: {
-        //         color: 'red',
-        //         width: 2,
-        //         dash: 'dash'
-        //     }
-        // }
+       
     ];
 
     // Set layout options
     let layout = {
-        title: 'AQI Values Comparison',
-        xaxis: { title: 'City' },
-        yaxis: { title: '\n AQI Value \n', range: [0, ylimit] },
-        images: [
-          {
-            "source": "/aqi_category_background.png",
-            "xref": "paper",
-            "yref": "paper",
-            "x": 0,
-            "y": 1,
-            "sizex": 0.2,
-            "sizey": 0.2,
-            "xanchor": "right",
-            "yanchor": "bottom"
+      showlegend: false,
+      title: {
+        text: 'Air Quality Index: Top 5 Best and Worst Cities',
+        font: {
+          family: "Arial, sans-serif",
+          size: 24,
+          color: "black"
+        }
+      },
+      // From xpert
+      annotations: [
+        {
+          x: 0.15, 
+          y: -0.2, 
+          xref: 'paper', 
+          yref: 'paper', 
+          text: 'Air Quality Index (AQI) Value',
+          showarrow: false,
+          font: {
+            family: 'Arial, sans-serif',
+            size: 18,
+            color: 'black'
           }
-        ],
+        },
+        {
+          x: -0.35, 
+          y: 0.5, 
+          xref: 'paper', 
+          yref: 'paper', 
+          text: 'City',
+          showarrow: false,
+          font: {
+            family: 'Arial, sans-serif',
+            size: 18,
+            color: 'black'
+          },
+          textangle: -90 
+        }
+      ],
       // Include margins in the layout so the x-tick labels display correctly
       margin: {
-        l: 70,
-        r: 70,
-        b: 120,
-        t: 50,
-        pad: 4
-      }
+        l: 200,
+        r: 60,
+        b: 90,
+        t: 90,
+        pad: 5
+      },
     };
   
     // Render the plot to the div tag with id "plot"
     Plotly.newPlot("bar2_chart", data, layout);
   
 }
+
 
 // event listener for CLICK on Button
 d3.select("#filter").on("click", do_work);
