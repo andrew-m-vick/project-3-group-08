@@ -15,7 +15,7 @@ function do_work() {
 
 
 function make_bar(filtered_data) {
-  // Define the desired order of categories
+  // ordering categories to display from best to worst
   const desiredOrder = [
     'Good',
     'Moderate',
@@ -25,7 +25,7 @@ function make_bar(filtered_data) {
     'Hazardous'
 ];
 
-// Sort the filtered_data based on the desired order
+// Sorting filtered_data based on the desired order
 filtered_data.sort((a, b) => {
     return desiredOrder.indexOf(a.aqi_category) - desiredOrder.indexOf(b.aqi_category);
 });
