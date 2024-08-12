@@ -172,46 +172,52 @@ function make_bar(filtered_data) {
   Plotly.newPlot("bar_chart", data, layout);
 }
   
-  function make_bar2(filtered_data) {
-    // sort values
-    filtered_data.sort((a, b) => (b.aqi_value - a.aqi_value));
-  
-    // extract the x & y values for our bar chart
-    let bar_x = filtered_data.map(x => x.aqi_category);
-    let bar_text = filtered_data.map(x => x.aqi_category);
-    let bar_y = filtered_data.map(x => x.count);
-  
-    // Trace1 for the Launch Attempts
+function make_bar2(filtered_data) {
+  // ordering categories to display from best to worst
+  const desiredOrder = [
+    'Good',
+    'Moderate',
+    'Unhealthy for Sensitive Groups',
+    'Unhealthy',
+    'Very Unhealthy',
+    'Hazardous'
+];
+// Sorting filtered_data based on the desired order
+filtered_data.sort((a, b) => {
+    return desiredOrder.indexOf(a.aqi_category) - desiredOrder.indexOf(b.aqi_category);
+});
+  // Initialize category counts
+  let bar_x = filtered_data.map(item => item.aqi_category);
+    let bar_y = filtered_data.map(item => item.count);
     let trace1 = {
-      x: bar_x,
-      y: bar_y,
-      type: 'bar',
-      marker: {
-        color: "skyblue"
-      },
-      text: bar_text,
-      name: "Attempts"
+        x: bar_x,
+        y: bar_y,
+        type: 'bar',
+        marker: {
+            color: ["#0466C8", "#0353A4", "#023E7D", "#33415C", "#002855", "#001845"]
+        }
     };
-  
-    // Create data array
-    let data = [trace1];
-  
-    // Apply a title to the layout
-    let layout = {
-      title: "AQI by category",
-      // Include margins in the layout so the x-tick labels display correctly
+  // Create data array
+  let data = [trace1];
+  // Apply a title to the layout
+  let layout = {
+      title: "AQI Category Counts",
       margin: {
-        l: 50,
-        r: 50,
-        b: 200,
-        t: 50,
-        pad: 4
+          l: 50,
+          r: 50,
+          b: 200,
+          t: 50,
+          pad: 4
+      },
+      xaxis: {
+          title: "AQI Category"
+      },
+      yaxis: {
+          title: "Count"
       }
-    };
-  
-    // Render the plot to the div tag with id "plot"
-    Plotly.newPlot("bar2_chart", data, layout);
-  
+  };
+  // Render the plot
+  Plotly.newPlot("bar2_chart", data, layout);
 }
 
 // event listener for CLICK on Button
