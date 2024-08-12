@@ -23,6 +23,10 @@ def map():
 def about_us():
     return render_template("about_us.html")
 
+@app.route("/resources")
+def resoucres():
+    return render_template("resources.html")
+
 # SQL Querris
 @app.route("/api/v1.0/get_dashboard/<country>") #change
 def get_dashboard(country): #add
