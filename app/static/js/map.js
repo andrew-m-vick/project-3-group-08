@@ -33,7 +33,7 @@ function createMap(data) {
 
   // Create a heatmap layer using the heatArray
   let heat = L.heatLayer(heatArray, {
-    radius: 30,
+    radius: 40,
     blur: 10,
     max: 8, // Maximum value in the aqiCategoryMapping
     opacity: 0.8,
