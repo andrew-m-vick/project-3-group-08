@@ -1,8 +1,57 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+/* Map Container Styling */
 #map-container {
-    height: 800px;
+  height: calc(100vh - 100px);  /* Increase space subtracted for the legend */
+  position: relative;
 }
-
 #map {
-    height: 100%;
+  height: 100%;
 }
-
+/* Legend Styling */
+.info.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  color: black;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
+  border-radius: 5px;
+  line-height: 18px;
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  z-index: 1000;
+  max-height: 160px; /* Set a fixed max-height for the legend */
+  overflow-y: auto;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: 250px;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background-color: rgba(0, 128, 255, 0.3) !important; /* Light blue with transparency */
+  width: 20px !important;             /* Reduced size */
+  height: 20px !important;
+  border-radius: 50% !important;    /* Make it a circle */
+  border: 1px solid blue !important; /* Add a blue border (optional) */
+}
+.marker-cluster div {
+  display: none !important; /* Hide the number inside the cluster */
+}
+/* Optional: Add a subtle hover effect */
+.marker-cluster:hover {
+  border-color: blue !important; /* Change border color on hover (optional) */
+}
