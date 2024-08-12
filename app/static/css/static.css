@@ -31,8 +31,10 @@ html {
   bottom: 20px; 
   right: 10px;
   z-index: 1000; 
-  max-height: 120px; /* Set a fixed max-height for the legend */
-  overflow-y: auto; 
+  max-height: 160px; /* Set a fixed max-height for the legend */
+  overflow-y: auto;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: 250px;
 }
 
 .legend i {
@@ -42,3 +44,23 @@ html {
   margin-right: 8px;
   opacity: 0.7;
 }
+
+.marker-cluster-small, 
+.marker-cluster-medium, 
+.marker-cluster-large {
+  background-color: rgba(0, 128, 255, 0.3) !important; /* Light blue with transparency */
+  width: 20px !important;             /* Reduced size */
+  height: 20px !important;
+  border-radius: 50% !important;    /* Make it a circle */
+  border: 1px solid blue !important; /* Add a blue border (optional) */
+}
+
+.marker-cluster div {
+  display: none !important; /* Hide the number inside the cluster */
+}
+
+/* Optional: Add a subtle hover effect */
+.marker-cluster:hover {
+  border-color: blue !important; /* Change border color on hover (optional) */
+}
+
