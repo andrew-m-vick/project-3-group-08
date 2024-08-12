@@ -25,6 +25,9 @@
     <!-- Leaflet heatmap plugin-->
     <script type="text/javascript" src="../static/js/leaflet-heat.js"></script>
 
+    <!-- Leaflet Filter plugin-->
+    <script src="https://unpkg.com/leaflet.filter@latest/dist/leaflet-filter.js"></script> 
+
     <!-- Leaflet Control Geocoder-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script> 
@@ -74,6 +77,14 @@
                 </div>
         <div class="row">
             <div class="col-md-12 text-center">
+                <div class="map-filters"> 
+                    <label> 
+                        <input type="checkbox" id="showMarkersCheckbox" checked> Show Markers
+                    </label> 
+                    <label> 
+                        <input type="checkbox" id="showHeatmapCheckbox" checked> Show Heatmap 
+                    </label> 
+                </div>
                 <div id="map-container"></div>
             </div>
         </div>

@@ -1,3 +1,7 @@
+// Declare myMap and heat in a broader scope
+let myMap;
+let heat;
+
 function createMap(data) {
   // Create the tile layer
   let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,19 +36,19 @@ function createMap(data) {
   }
 
   // Create a heatmap layer using the heatArray
-  let heat = L.heatLayer(heatArray, {
-    radius: 40,
+  heat = L.heatLayer(heatArray, {
+    radius: 30,
     blur: 10,
-    max: 8, // Maximum value in the aqiCategoryMapping
+    max: 8, 
     opacity: 0.8,
     gradient: { 
-      0.17: '#00E400',  // Good (aqiCategoryValue = 1)
-      0.33: '#FFFF00',  // Moderate (aqiCategoryValue = 2)
-      0.50: '#FF7E00',  // Unhealthy for Sensitive Groups (aqiCategoryValue = 3)
-      0.67: '#FF0000',  // Unhealthy (aqiCategoryValue = 4)
-      0.83: '#8F3F97',  // Very Unhealthy (aqiCategoryValue = 5)
-      1.00: '#7E0023'   // Hazardous (aqiCategoryValue = 6)
-    }
+      0.17: '#00E400',  
+      0.33: '#FFFF00',  
+      0.50: '#FF7E00', 
+      0.67: '#FF0000', 
+      0.83: '#8F3F97',  
+      1.00: '#7E0023'   
+    } 
   });
 
   // Create markers for each location and add them to a marker cluster group
@@ -72,7 +76,7 @@ function createMap(data) {
   myMap = L.map('map-container', {
     center: [37.09, -95.71], 
     zoom: 5,                 
-    layers: [streetmap, heat, markers]
+    layers: [streetmap, heat, markers] // Add heat layer initially
   });
 
   // Add a scale control to the map
@@ -85,8 +89,10 @@ function createMap(data) {
     let div = L.DomUtil.create('div', 'info legend');
 
     // Add the legend title
-    let title = L.DomUtil.create('div');
-    title.innerHTML = '<h5>AQI Category</h5>'; // Set the title text
+    let title = document.createElement('h3'); 
+    title.textContent = 'AQI Category';        
+    title.classList.add('legend-title');      
+
     div.appendChild(title);
 
     let grades = Object.keys(aqiCategoryMapping), 
@@ -122,6 +128,27 @@ function createMap(data) {
            aqiCategoryValue === 1 ? '#00E400' : // Good
                                     '#fefefe' ;  
   }
+
+  // Get references to the checkboxes 
+  const showMarkersCheckbox = document.getElementById('showMarkersCheckbox');
+  const showHeatmapCheckbox = document.getElementById('showHeatmapCheckbox');
+
+  // Event listeners for checkbox changes
+  showMarkersCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+      markers.addTo(myMap); 
+    } else {
+      myMap.removeLayer(markers); 
+    }
+  });
+
+  showHeatmapCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+      heat.addTo(myMap); 
+    } else {
+      myMap.removeLayer(heat);
+    }
+  });
 }
 
 // Fetch data from the Flask API and create the map
