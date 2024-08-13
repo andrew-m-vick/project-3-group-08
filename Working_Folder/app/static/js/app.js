@@ -81,31 +81,38 @@ function make_bar(filtered_data) {
     let uniqueValues = {};
     let result = filtered_data.filter(obj => {
       return uniqueValues.hasOwnProperty(obj.city) ? false : (uniqueValues[obj.city] = true);
+  
     });
 
     // Sort filtered results
     let sortedAqiValues = result.sort((a, b) => (b.aqi_value - a.aqi_value));
 
-    // Get top and bottom 5 results from sorted filtered data
-    let top5Values = sortedAqiValues.slice(0, 5);
-    let bottom5Values = sortedAqiValues.slice(-5);
+    // If results have at least 10 cities, slice off the top 5 and bottom 5 and add to 
+    // combinedAqi.  If results have less then 5, add them directly to combinedAqi
+    if (sortedAqiValues.length >= 10) {
+        top5Values = sortedAqiValues.slice(0, 5);
+        bottom5Values = sortedAqiValues.slice(-5);
+        combinedAqi = top5Values.concat(bottom5Values);
+    } else {
+        combinedAqi = sortedAqiValues.slice().sort((a, b) => a - b);
+    }
 
     // Get ylimit to dynamically set ylimit based on aqi_value
-    let highestAqi = sortedAqiValues[0];
-    let ylimAqi = highestAqi.aqi_value;
-    let ylimit = ylimAqi + 50;
+    let ylimit = 0; 
 
-    // Extract city, country and aqi_category for top and bottom 5 values
-    let topCities = top5Values.map(item => item.city + ", " + item.country);
-    let bottomCities = bottom5Values.map(item => item.city + ", " + item.country);
-    let topChartText = top5Values.map(item => "AQI " + item.aqi_value + ": " + item.aqi_category);
-    let bottomChartText = bottom5Values.map(item => "AQI " + item.aqi_value + ": " + item.aqi_category);
+    if (sortedAqiValues.length > 0) {
+        let highestAqi = sortedAqiValues[0];
+        ylimit = highestAqi.aqi_value + 50;
+    }
 
-    // Extract AQI values and categories for top and bottom 5 values
-    let topAqiValues = top5Values.map(item => item.aqi_value);
-    let topAqiCategories = top5Values.map(item => item.aqi_category);
-    let bottomAqiValues = bottom5Values.map(item => item.aqi_value);
-    let bottomAqiCategories = bottom5Values.map(item => item.aqi_category);
+    // Extract city, country and aqi_category
+    let chartLocationLabel = combinedAqi.map(item => item.city + ", " + item.country);
+    let chartDataLabel = combinedAqi.map(item => "AQI " + item.aqi_value + ": " + item.aqi_category);
+
+    // Extract AQI values and categories
+    let combinedAqiValues = combinedAqi.map(item => item.aqi_value);
+    let combinedCategoryValues = combinedAqi.map(item => item.aqi_category);
+
 
     // Set each bar color according to AQI category
     function getColorByCategory(aqi_category) {
@@ -130,11 +137,11 @@ function make_bar(filtered_data) {
     // Create the data for the bar chart
     let data = [
         {
-            y: topCities,
-            x: topAqiValues,
+            y: chartLocationLabel,
+            x: combinedAqiValues,
             marker:{
               // Set bar color based on aqi_category
-              color: topAqiCategories.map(category => getColorByCategory(category)),
+              color: combinedCategoryValues.map(category => getColorByCategory(category)),
               opacity: 0.75,
               line: {
                 color: "black",
@@ -143,28 +150,10 @@ function make_bar(filtered_data) {
             type: 'bar',
             hoverinfo: "none",
             orientation: "h",
-            text: topChartText,
+            text: chartDataLabel,
             textposition: "auto",
             name: 'Top 5 Worst Cities',
-        },
-        {
-            y: bottomCities,
-            x: bottomAqiValues,
-            marker:{
-              color: bottomAqiCategories.map(category => getColorByCategory(category)),
-              opacity: 0.75,
-              line: {
-                color: "black",
-                width: 1},
-            },
-            type: 'bar',
-            orientation: "h",
-            hoverinfo: "none",
-            text: bottomChartText,
-            textposition: "auto",
-            name: 'Top 5 Best Cities'
-        },
-       
+        }       
     ];
 
     // Set layout options
@@ -174,14 +163,14 @@ function make_bar(filtered_data) {
         text: 'Air Quality Index: Top 5 Best and Worst Cities',
         font: {
           family: "Arial, sans-serif",
-          size: 24,
+          size: 22,
           color: "black"
         }
       },
       // From xpert
       annotations: [
         {
-          x: 0.15, 
+          x: -0.1, 
           y: -0.2, 
           xref: 'paper', 
           yref: 'paper', 
@@ -194,7 +183,7 @@ function make_bar(filtered_data) {
           }
         },
         {
-          x: -0.35, 
+          x: -0.8, 
           y: 0.5, 
           xref: 'paper', 
           yref: 'paper', 
@@ -218,8 +207,14 @@ function make_bar(filtered_data) {
       },
     };
   
-    // Render the plot to the div tag with id "plot"
+      // Check if the result array is empty
+  if (result.length === 0) {
+    // Render a message instead of the chart
+    document.getElementById("bar2_chart").innerHTML = "<p>No data available for the selected country.</p>";
+  } else {
+    // Render the plot to the div tag with id "bar2_chart"
     Plotly.newPlot("bar2_chart", data, layout);
+  }
   
 }
 
