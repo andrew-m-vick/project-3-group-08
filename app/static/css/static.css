@@ -15,7 +15,7 @@ nav.navbar {
 
 /* Map Container Styling */
 #map-container {
-  height: calc(100vh - 100px);  /* Increase space subtracted for the legend */
+  height: calc(100vh - 150px);  /* Increase space subtracted for the legend */
   position: relative; 
   padding-top: 60px; /* Adjust this value to match your navbar's height */
 }
@@ -86,5 +86,6 @@ nav.navbar {
 
 /* Add top margin to headers/titles to avoid overlap with the navbar */
 h1, h2, h3, h4, h5, h6 { /* Target all heading levels */
-  margin-top: 70px; /* Adjust this value to match your navbar's height plus some extra spacing */
+  margin-top: 50px; /* Adjust this value to match your navbar's height plus some extra spacing */
+  margin-bottom:20px;
 }
