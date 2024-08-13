@@ -1,4 +1,87 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AQI Map</title>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://bootswatch.com/5/vapor/bootstrap.min.css", rel="stylesheet">
+    <link href="../static/css/static.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <!-- Leaflet heatmap plugin-->
+    <script type="text/javascript" src="../static/js/leaflet-heat.js"></script>
+    <!-- Leaflet Filter plugin-->
+    <script src="https://unpkg.com/leaflet.filter@latest/dist/leaflet-filter.js"></script>
+    <!-- Leaflet Control Geocoder-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <!-- Marker cluster JavaScript code -->
+    <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+    <!-- Marker cluster CSS -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+    <!-- JS IMPORTS - External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="static/images/air-quality-index-graphic.webp" height="30px"></a>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" href="/map">Map</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/about_us">About Us</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/resources">Resources</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- add spacing -->
+    <br/>
+    <!-- Dashboard -->
+            <div class="col-md-12">
+                <p>AQI World Map</p>
+                </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="map-filters">
+                    <label>
+                        <input type="checkbox" id="showMarkersCheckbox" checked> Show Markers
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showHeatmapCheckbox" checked> Show Heatmap
+                    </label>
+                </div>
+                <div id="map-container"></div>
+            </div>
+        </div>
+     </div>
+     <br/>
+     <br/>
+    <script src="../static/js/map.js"></script>
+</body>
+=======
 <html>
 
 <head>
@@ -27,4 +110,5 @@
 
 </body>
 
+>>>>>>> main
 </html>
