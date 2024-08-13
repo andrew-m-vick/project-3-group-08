@@ -15,7 +15,7 @@ nav.navbar {
 
 /* Map Container Styling */
 #map-container {
-  height: calc(100vh - 165px);  /* Increase space subtracted for the legend */
+  height: calc(100vh - 220px);  /* Increase space subtracted for the legend */
   position: relative; 
   padding-top: 60px; /* Adjust this value to match your navbar's height */
 }
