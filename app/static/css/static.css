@@ -4,10 +4,18 @@ html {
   margin: 0;
   padding: 0;
 }
+/* Make the navbar sticky */
+nav.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
 /* Map Container Styling */
 #map-container {
-  height: calc(100vh - 100px);  /* Increase space subtracted for the legend */
+  height: calc(100vh - 220px);  /* Increase space subtracted for the legend */
   position: relative;
+  padding-top: 60px; /* Adjust this value to match your navbar's height */
 }
 #map {
   height: 100%;
@@ -22,22 +30,34 @@ html {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border: 2px solid white;
   border-radius: 5px;
-  line-height: 18px;
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  z-index: 1000;
-  max-height: 200px; /* Set a fixed max-height for the legend */
+  line-height: 24px;
+  max-height: 2000px; /* Set a fixed max-height for the legend */
   overflow-y: auto;
   white-space: nowrap; /* Prevent text from wrapping */
   width: 250px;
+  box-sizing: border-box;
+}
+.legend-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 16px;
+  display: block;
+  margin-top: 0 !important; /* Explicitly override top margin */
+}
+.legend-title h3 {
+  margin-top: 0;
 }
 .legend i {
   width: 18px;
   height: 18px;
   float: left;
   margin-right: 8px;
+  margin-top: 4px;
   opacity: 0.7;
+  clear: both;
+}
+.map-filters {
+  margin-bottom: 15px; /* Add bottom margin to create space between filters and map */
 }
 .marker-cluster-small,
 .marker-cluster-medium,
@@ -54,4 +74,9 @@ html {
 /* Optional: Add a subtle hover effect */
 .marker-cluster:hover {
   border-color: blue !important; /* Change border color on hover (optional) */
+}
+/* Add top margin to headers/titles to avoid overlap with the navbar */
+h1, h2, h3, h4, h5, h6 { /* Target all heading levels */
+  margin-top: 50px; /* Adjust this value to match your navbar's height plus some extra spacing */
+  margin-bottom:20px;
 }
