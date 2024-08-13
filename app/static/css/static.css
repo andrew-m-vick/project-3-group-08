@@ -15,7 +15,7 @@ nav.navbar {
 
 /* Map Container Styling */
 #map-container {
-  height: calc(100vh - 150px);  /* Increase space subtracted for the legend */
+  height: calc(100vh - 165px);  /* Increase space subtracted for the legend */
   position: relative; 
   padding-top: 60px; /* Adjust this value to match your navbar's height */
 }
@@ -63,6 +63,10 @@ nav.navbar {
   margin-top: 4px;
   opacity: 0.7;
   clear: both;
+}
+
+.map-filters {
+  margin-bottom: 15px; /* Add bottom margin to create space between filters and map */
 }
 
 .marker-cluster-small, 
