@@ -124,7 +124,7 @@ function make_bar(filtered_data) {
     // From xpert
     annotations: [
       {
-        x: -0.1,
+        x: 0.5,
         y: -0.2,
         xref: 'paper',
         yref: 'paper',
@@ -137,7 +137,7 @@ function make_bar(filtered_data) {
         }
       },
       {
-        x: -0.8,
+        x: -0.35,
         y: 0.5,
         xref: 'paper',
         yref: 'paper',
