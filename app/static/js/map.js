@@ -52,7 +52,6 @@ function createMap(data) {
         // Create the popup content for each marker
         let popupContent = `
         <b>City:</b> ${location.city}<br>
-        <b>Country:</b> ${location.country}<br>
         <b>AQI Value:</b> ${location.aqi_value}<br>
         <b>AQI Category:</b> ${location.aqi_category}<br>
         `;
