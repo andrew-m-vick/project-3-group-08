@@ -23,6 +23,7 @@ def map():
 def about_us():
     return render_template("about_us.html")
 
+<<<<<<< HEAD
 @app.route("/resources")
 def resoucres():
     return render_template("resources.html")
@@ -30,6 +31,12 @@ def resoucres():
 # SQL Querris
 @app.route("/api/v1.0/get_dashboard/<country>") #change
 def get_dashboard(country): #add
+=======
+# SQL Querris
+@app.route("/api/v1.0/get_dashboard/<country>") #change
+def get_dashboard(country): #add
+    # min_attempts = int(min_attempts) # cast to int
+>>>>>>> main
 
     bar_data = sql.get_bar(country) #add
     bar2_data = sql.get_bar2(country) #add
@@ -42,8 +49,13 @@ def get_dashboard(country): #add
     }
     return(jsonify(data))
 
+<<<<<<< HEAD
 @app.route("/api/v1.0/get_map") #change
 def get_map(): #add/take away
+=======
+@app.route("/api/v1.0/get_map/<country>") #change
+def get_map(country): #add/take away
+>>>>>>> main
     #min_attempts = int(min_attempts) # cast to int
     map_data = sql.get_map() #double check
 
