@@ -27,7 +27,7 @@ html {
   bottom: 20px;
   right: 10px;
   z-index: 1000;
-  max-height: 160px; /* Set a fixed max-height for the legend */
+  max-height: 200px; /* Set a fixed max-height for the legend */
   overflow-y: auto;
   white-space: nowrap; /* Prevent text from wrapping */
   width: 250px;

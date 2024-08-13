@@ -19,6 +19,8 @@
     crossorigin=""></script>
     <!-- Leaflet heatmap plugin-->
     <script type="text/javascript" src="../static/js/leaflet-heat.js"></script>
+    <!-- Leaflet Filter plugin-->
+    <script src="https://unpkg.com/leaflet.filter@latest/dist/leaflet-filter.js"></script>
     <!-- Leaflet Control Geocoder-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
@@ -36,11 +38,8 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">LOGO</a>
+            <a class="navbar-brand" href="/"><img src="static/images/air-quality-index-graphic.webp" height="30px"></a>
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-                </li>
                 <li class="nav-item">
                 <a class="nav-link" href="/dashboard">Dashboard</a>
                 </li>
@@ -65,6 +64,14 @@
                 </div>
         <div class="row">
             <div class="col-md-12 text-center">
+                <div class="map-filters">
+                    <label>
+                        <input type="checkbox" id="showMarkersCheckbox" checked> Show Markers
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showHeatmapCheckbox" checked> Show Heatmap
+                    </label>
+                </div>
                 <div id="map-container"></div>
             </div>
         </div>
@@ -74,12 +81,3 @@
     <script src="../static/js/map.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

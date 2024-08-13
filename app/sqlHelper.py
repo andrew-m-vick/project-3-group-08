@@ -37,8 +37,7 @@ class SQLHelper():
             ORDER BY
                 aqi_value DESC,
                 co_aqi_value DESC,
-                no2_aqi_value
-            LIMIT 10;
+                no2_aqi_value;
         """
 
         # execute query

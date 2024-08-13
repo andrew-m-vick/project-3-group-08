@@ -14,6 +14,9 @@ function do_work() {
 }
   
 function make_table(filtered_data) {
+
+  // re-init the datatable
+  $('#data_table').DataTable().clear().destroy();
     // select table
     let table = d3.select("#data_table");
     let table_body = table.select("tbody");
@@ -33,6 +36,8 @@ function make_table(filtered_data) {
       row.append("td").text(data_row.latitude);
       row.append("td").text(data_row.longitude);
     }
+  // Create the datatable
+  $('#data_table').DataTable();
 }
 
 function make_bar(filtered_data) {
@@ -194,7 +199,7 @@ filtered_data.sort((a, b) => {
         y: bar_y,
         type: 'bar',
         marker: {
-            color: ["#7E0023", "#8F3F97", "#FF0000", "#FF7E00", "#FFFF00", "#00E400"]
+            color: ["#00E400", "#FFFF00", "#FF7E00", "#FF0000", "#8F3F97", "#7E0023"]
         }
     };
   // Create data array
