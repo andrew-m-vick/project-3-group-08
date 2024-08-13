@@ -111,19 +111,19 @@ function make_bar(filtered_data) {
     function getColorByCategory(aqi_category) {
       switch (aqi_category) {
           case "Hazardous":
-              return "#0466C80";
+              return "#7e0023";
           case "Very Unhealthy":
-              return "#0353A451";
+              return "#8f3f97";
           case "Unhealthy":
-              return "#023E7D";
+              return "#ff0000";
           case "Unhealthy for Sensitive Groups":
-              return "#5C677D";
+              return "#ff7e00";
           case "Moderate":
-              return "#7D8597";
+              return "#ffff00";
           case "Good":
-              return "#979DAC";
+              return "#00e400";
           default:
-              return 'orange'; // Default color catchall 
+              return 'black'; // Default color catchall 
       }
   }
 
