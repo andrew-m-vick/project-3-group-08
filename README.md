@@ -4,6 +4,8 @@
 
 ## **Global Air Quality Index Analysis**
 
+![aqi](app/static/images/air-quality-index-graphic.webp)
+
 This project explores global air quality trends using an Air Quality Index (AQI) dataset. The AQI, developed by the EPA, measures the presence of five major pollutants and assigns a score from 0 to 500, with higher scores indicating greater health risks.
 
 ## Project Goals
