@@ -18,6 +18,8 @@ This project explores global air quality trends using an Air Quality Index (AQI)
 
 ## Data and Methodology
 
+![bar chart](app/static/images/bar_chart_1.png)
+
 - Dataset: World Air Quality Index by City and Coordinates (Kaggle)
 - Tools: Python, Flask, SQLite, JavaScript, HTML, CSS
 - Visualizations: Interactive dashboard with bar charts and table, heatmap with marker clusters
