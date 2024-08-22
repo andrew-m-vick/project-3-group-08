@@ -6,28 +6,28 @@ This project explores global air quality trends using an Air Quality Index (AQI)
 
 ## Project Goals
 
-Analyze AQI values across cities and countries
-Raise awareness about air pollution's impact
-Empower informed decisions through data visualization
+- Analyze AQI values across cities and countries
+- Raise awareness about air pollution's impact
+- Empower informed decisions through data visualization
 
 ## Data and Methodology
 
-Dataset: World Air Quality Index by City and Coordinates (Kaggle)
-Tools: Python, Flask, SQLite, JavaScript, HTML, CSS
-Visualizations: Interactive dashboard with bar charts and table, heatmap with marker clusters
+- Dataset: World Air Quality Index by City and Coordinates (Kaggle)
+- Tools: Python, Flask, SQLite, JavaScript, HTML, CSS
+- Visualizations: Interactive dashboard with bar charts and table, heatmap with marker clusters
 
 ## Key Findings
 
-Worst air quality: Cities in Pakistan, Russia, South Africa, and Durango, CO (AQI = 500)
-Best air quality: Ecuador (majority of cities with 'good' or 'moderate' AQI)
-Similarities in AQI levels vary by region: Europe shows more consistency, while China and India exhibit greater variability
+- Worst air quality: Cities in Pakistan, Russia, South Africa, and Durango, CO (AQI = 500)
+- Best air quality: Ecuador (majority of cities with 'good' or 'moderate' AQI)
+- Similarities in AQI levels vary by region: Europe shows more consistency, while China and India exhibit greater variability
 
 ## Limitations
 
-Inaccurate country labels in dataset
-Heatmap impact reduced due to large dataset size
-Potential inconsistencies in AQI measurement standards across countries
-Lack of data on natural disasters impacting air quality
+- Inaccurate country labels in dataset
+- Heatmap impact reduced due to large dataset size
+- Potential inconsistencies in AQI measurement standards across countries
+- Lack of data on natural disasters impacting air quality
 
 ## Conclusion
 
