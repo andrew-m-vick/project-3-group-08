@@ -2,7 +2,7 @@
 
 https://andrewvick.pythonanywhere.com
 
-![map](app/static/images/usa_map.png)
+![map](app/static/images/heatmap.png)
 
 ## **Global Air Quality Index Analysis**
 
